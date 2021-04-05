@@ -1,11 +1,21 @@
 const ship = {
     size: 20,
-    speedX: 1,
+    speedX: 0,
     locationX: 0,
     canvas: null,
     ctx: null,
 
     init(canvasElt, ctx) {
+        document.addEventListener('keydown', (e)=>{
+            e.preventDefault();
+            e.stopPropagation();
+            if(e.key === 'ArrowRight'){
+                this.speedX += 0.2;
+            }
+            if(e.key === 'ArrowLeft'){
+                this.speedX -= 0.2;
+            }
+        })
         this.canvas = canvasElt;
         this.ctx = ctx;
         this.locationX = this.canvas.width / 2;

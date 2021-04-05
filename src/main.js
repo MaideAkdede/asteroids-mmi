@@ -21,7 +21,6 @@ const main = {
         this.ctx = this.canvasElt.getContext('2d');
         this.ctx.strokeStyle = '#fff';
 
-
         ship.init(this.canvasElt, this.ctx);
 
         this.animate();
