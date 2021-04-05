@@ -10,12 +10,22 @@ const ctx = canvas.getContext('2d');
 ctx.strokeStyle = '#fff';
 
 const shipSize = 20;
+const shipSpeedX = 1;
 const asteroidSize = 20;
 
+let shipLocationX = canvas.width/2;
+
+function shipUpdate(){
+    shipLocationX += shipSpeedX;
+    if(shipLocationX>canvas.width + shipSize){
+        shipLocationX = -shipSize;
+    }
+    shipDraw();
+}
 function shipDraw(){
     ctx.save();
     ctx.rotate(0);
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.translate(shipLocationX, canvas.height / 2);
     ctx.beginPath();
     ctx.moveTo(0, -1.5 * shipSize / 2);
     ctx.lineTo(shipSize / 2, 0.5 + (shipSize * 1.5 / 2));
@@ -37,5 +47,5 @@ animate();
 function animate(){
     window.requestAnimationFrame(animate);
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    shipDraw();
+    shipUpdate();
 }
