@@ -5,8 +5,8 @@ const ship = {
     canvas: null,
     ctx: null,
 
-    init(canvas, ctx) {
-        this.canvas = canvas;
+    init(canvasElt, ctx) {
+        this.canvas = canvasElt;
         this.ctx = ctx;
         this.locationX = this.canvas.width / 2;
     },
