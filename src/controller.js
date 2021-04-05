@@ -1,7 +1,6 @@
 const controller = {
     keys:{
-        'ArrowRight': 1,
-        'ArrowLeft': -1
+        'ArrowUp': -1
     },
     activeKeys:[],
     init(){
