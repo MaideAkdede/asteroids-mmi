@@ -11,9 +11,11 @@ ctx.strokeStyle = '#fff';
 console.log('TEST DE LA COMPILATION HOT');
 const shipSize = 20;
 
+ctx.rotate(0);
+ctx.translate(canvas.width / 2, canvas.height / 2);
 ctx.beginPath();
-ctx.moveTo(canvas.width / 2, canvas.height / 2);
-ctx.lineTo(canvas.width / 2 + shipSize / 2, 0.5 + (canvas.height / 2 + 1.5 * shipSize));
-ctx.lineTo(canvas.width / 2 - shipSize / 2, 0.5 + (canvas.height / 2 + 1.5 * shipSize));
+ctx.moveTo(0, -1.5 * shipSize/2);
+ctx.lineTo(shipSize / 2, 0.5 + (shipSize * 1.5 / 2));
+ctx.lineTo(-shipSize / 2, 0.5 + (shipSize * 1.5 / 2));
 ctx.closePath();
 ctx.stroke();
