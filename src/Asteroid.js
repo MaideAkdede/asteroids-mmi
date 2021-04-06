@@ -6,9 +6,12 @@ export default class Asteroid {
         this.canvas = canvas;
         this.ctx = ctx;
         this.ctx.fillStyle = '#9d9d9d';
-        this.size = 10;
+        this.size = 7 + Math.random() * 5;
         this.heading = Math.random() * Math.PI * 2;
         this.location = new Vector(Math.random() * this.canvas.width, Math.random() * this.canvas.height);
+        this.speed = new Vector(0, 0);
+        this.acceleration = Vector.fromAngle(this.heading, 2 + Math.random() * 2);
+        this.speed.add(this.acceleration);
         const asCount = asteroidShapes.length;
         const i = Math.floor(Math.random() * asCount);
         this.shape = asteroidShapes[i];
@@ -16,7 +19,26 @@ export default class Asteroid {
     }
 
     update() {
+        this.location.add(this.speed);
+        this.checkEdges();
         this.draw();
+    }
+
+    checkEdges() {
+        const offset = 50;
+
+        if (this.location.y > this.canvas.height + offset) {
+            this.location.y = -offset;
+        }
+        if (this.location.y < -offset) {
+            this.location.y = this.canvas.height + offset;
+        }
+        if (this.location.x > this.canvas.width + offset) {
+            this.location.x = -offset;
+        }
+        if (this.location.x < -offset) {
+            this.location.x = this.canvas.width + offset;
+        }
     }
 
     draw() {
