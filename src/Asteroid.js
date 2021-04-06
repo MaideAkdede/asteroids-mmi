@@ -5,10 +5,13 @@ export default class Asteroid {
     constructor(canvas, ctx, parent = null) {
         this.canvas = canvas;
         this.ctx = ctx;
+        this.rotation = 0;
         if (!parent) {
+            this.rotationSpeed = Math.random() / 30;
             this.size = 7 + Math.random() * 5;
             this.location = new Vector(Math.random() * this.canvas.width, Math.random() * this.canvas.height);
         } else {
+            this.rotationSpeed = parent.rotationSpeed * 2;
             this.size = parent.size / 2;
             this.location = new Vector(parent.location.x, parent.location.y);
         }
@@ -37,6 +40,7 @@ export default class Asteroid {
 
     update() {
         this.location.add(this.speed);
+        this.rotation += this.rotationSpeed;
         this.checkEdges();
         this.draw();
     }
@@ -61,7 +65,7 @@ export default class Asteroid {
     draw() {
         this.ctx.save();
         this.ctx.translate(this.location.x, this.location.y);
-        this.ctx.rotate(this.heading);
+        this.ctx.rotate(this.rotation);
         //this.ctx.beginPath();
         this.ctx.fill(this.path);
         this.ctx.restore();
