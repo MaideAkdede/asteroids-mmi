@@ -63,10 +63,6 @@ const ship = {
     updateHeading(angle) {
         this.heading += angle;
     },
-    removeBullet(bullet) {
-        const i = this.bullets.indexOf(bullet);
-        this.bullets.splice(i, 1);
-    },
     draw() {
         this.ctx.save();
         this.ctx.translate(this.location.x, this.location.y);
