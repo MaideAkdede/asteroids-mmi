@@ -2,7 +2,7 @@ import Vector from "./Vector";
 import ship from "./ship";
 import garbageManager from "./garbageManager";
 
-export default class Bullet{
+export default class Bullet {
     constructor() {
         this.ctx = ship.ctx;
         this.location = new Vector(ship.location.x, ship.location.y);
@@ -12,12 +12,14 @@ export default class Bullet{
         this.acceleration = Vector.fromAngle(this.heading, 10);
         this.speed.add(this.acceleration);
     }
-    update(){
+
+    update() {
         this.location.add(this.speed);
         this.checkEdges();
         this.draw();
     }
-    checkEdges(){
+
+    checkEdges() {
         if (
             (this.location.y > ship.canvas.height) ||
             (this.location.y < 0) ||
@@ -28,7 +30,8 @@ export default class Bullet{
         }
 
     }
-    draw(){
+
+    draw() {
         this.ctx.save();
         this.ctx.translate(this.location.x, this.location.y);
         this.ctx.rotate(this.heading);
