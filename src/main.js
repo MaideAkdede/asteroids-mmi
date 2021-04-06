@@ -48,12 +48,21 @@ const main = {
         this.asteroids.forEach((asteroid) => {
             asteroid.update();
         })
-        if(ship.bullets.length && this.asteroids.length){
+        if (ship.bullets.length && this.asteroids.length) {
             const collidingPair = collisionDetector.detect(this.ctx, ship, this.asteroids);
-            if(collidingPair){
-            garbageManager.remove(collidingPair.bullet, ship.bullets)
-            garbageManager.remove(collidingPair.asteroid, this.asteroids)
+            if (collidingPair) {
+                garbageManager.remove(collidingPair.bullet, ship.bullets);
+                if (collidingPair.asteroid.size > 4) {
+                    this.generateSmallAsteroids(collidingPair.asteroid);
+                }
+                garbageManager.remove(collidingPair.asteroid, this.asteroids);
             }
+        }
+    },
+    generateSmallAsteroids(parentAsteroid) {
+        const childrenCount = Math.floor(2 + Math.random() * 3);
+        for (let i = 0; i < childrenCount; i++) {
+            this.asteroids.push(new Asteroid(this.canvasElt, this.ctx, parentAsteroid))
         }
     }
 }

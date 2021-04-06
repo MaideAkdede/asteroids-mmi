@@ -2,13 +2,18 @@ import asteroidShapes from "./asteroidShapes";
 import Vector from "./Vector";
 
 export default class Asteroid {
-    constructor(canvas, ctx) {
+    constructor(canvas, ctx, parent = null) {
         this.canvas = canvas;
         this.ctx = ctx;
+        if (!parent) {
+            this.size = 7 + Math.random() * 5;
+            this.location = new Vector(Math.random() * this.canvas.width, Math.random() * this.canvas.height);
+        } else {
+            this.size = parent.size / 2;
+            this.location = new Vector(parent.location.x, parent.location.y);
+        }
         this.ctx.fillStyle = '#9d9d9d';
-        this.size = 7 + Math.random() * 5;
         this.heading = Math.random() * Math.PI * 2;
-        this.location = new Vector(Math.random() * this.canvas.width, Math.random() * this.canvas.height);
         this.speed = new Vector(0, 0);
         this.acceleration = Vector.fromAngle(this.heading, 2 + Math.random() * 2);
         this.speed.add(this.acceleration);
@@ -18,7 +23,8 @@ export default class Asteroid {
         this.path = new Path2D();
         this.createPath();
     }
-    createPath(){
+
+    createPath() {
         this.path.moveTo(this.shape[0] * this.size, this.shape[1] * this.size);
         let i = 2;
         const shapePointsCount = this.shape.length;
@@ -28,6 +34,7 @@ export default class Asteroid {
         }
         this.path.closePath();
     }
+
     update() {
         this.location.add(this.speed);
         this.checkEdges();
