@@ -1,5 +1,7 @@
 import ship from "./ship";
 import Asteroid from "./Asteroid";
+import collisionDetector from "./collisionDetector";
+import garbageManager from "./garbageManager";
 
 const main = {
     mainElt: null,
@@ -25,7 +27,7 @@ const main = {
         this.ctx.strokeStyle = '#fff';
         this.ctx.fillStyle = '#fff';
 
-        for(let i=0; i<4; i++){
+        for (let i = 0; i < this.asteroidsCount; i++) {
             this.asteroids.push(new Asteroid(this.canvasElt, this.ctx));
         }
 
@@ -40,12 +42,19 @@ const main = {
         });
         this.ctx.clearRect(0, 0, this.canvasElt.width, this.canvasElt.height);
         ship.update();
-        ship.bullets.forEach((bullet)=>{
+        ship.bullets.forEach((bullet) => {
             bullet.update();
         })
-        this.asteroids.forEach((asteroid)=>{
+        this.asteroids.forEach((asteroid) => {
             asteroid.update();
         })
+        if(ship.bullets.length && this.asteroids.length){
+            const collidingPair = collisionDetector.detect(this.ctx, ship, this.asteroids);
+            if(collidingPair){
+            garbageManager.remove(collidingPair.bullet, ship.bullets)
+            garbageManager.remove(collidingPair.asteroid, this.asteroids)
+            }
+        }
     }
 }
 main.init();

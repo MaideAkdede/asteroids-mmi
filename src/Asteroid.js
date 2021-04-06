@@ -15,9 +15,19 @@ export default class Asteroid {
         const asCount = asteroidShapes.length;
         const i = Math.floor(Math.random() * asCount);
         this.shape = asteroidShapes[i];
-
+        this.path = new Path2D();
+        this.createPath();
     }
-
+    createPath(){
+        this.path.moveTo(this.shape[0] * this.size, this.shape[1] * this.size);
+        let i = 2;
+        const shapePointsCount = this.shape.length;
+        while (i <= shapePointsCount - 2) {
+            this.path.lineTo(this.shape[i] * this.size, this.shape[++i] * this.size);
+            i++;
+        }
+        this.path.closePath();
+    }
     update() {
         this.location.add(this.speed);
         this.checkEdges();
@@ -45,16 +55,8 @@ export default class Asteroid {
         this.ctx.save();
         this.ctx.translate(this.location.x, this.location.y);
         this.ctx.rotate(this.heading);
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.shape[0] * this.size, this.shape[1] * this.size);
-        let i = 2;
-        const shapePointsCount = this.shape.length;
-        while (i <= shapePointsCount - 2) {
-            this.ctx.lineTo(this.shape[i] * this.size, this.shape[++i] * this.size);
-            i++;
-        }
-        this.ctx.closePath();
-        this.ctx.fill();
+        //this.ctx.beginPath();
+        this.ctx.fill(this.path);
         this.ctx.restore();
     }
 }
